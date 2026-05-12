@@ -1,1 +1,1 @@
-# monaco-nerd-font
+# monotional-nerd-font

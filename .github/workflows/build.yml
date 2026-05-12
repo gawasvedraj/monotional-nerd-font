@@ -47,24 +47,38 @@ jobs:
           chmod +x font-patcher
           echo "Font-Patcher ready"
 
-      - name: Patch Monaco
+      - name: Get Monotional
+        uses: robinraju/release-downloader@v1
+        with:
+          repository: "regularhunter/monotional-font"
+          latest: true
+          fileName: "Monotional*"
+
+      - name: Extract Fonts
+        run: |
+          unzip Monotional*.zip
+          mkdir -p fonts
+          cp Monotional*/*.ttf fonts/
+          echo "Fonts ready"
+
+      - name: Patch Monotional
         run: |
           mkdir -p output
-          ./font-patcher -c -q --careful -out output fonts/Monaco.ttf
-          ./font-patcher -c -q -s --careful -out output fonts/Monaco.ttf
+          ./font-patcher -c -q --careful -out output fonts/*.ttf
+          ./font-patcher -c -q -s --careful -out output fonts/*.ttf
 
       - name: Package Result
         run: |
           cd output
-          zip -r Monaco-Nerd-Font.zip .
+          zip -r Monotional-Nerd-Font.zip .
 
       - name: Set Artifact Name
         run: |
-          ARTIFACT="Monaco-Nerd-Font-$(date +'%Y%m%d')-${{ github.run_number }}"
+          ARTIFACT="Monotional-Nerd-Font-$(date +'%Y%m%d')-${{ github.run_number }}"
           echo "ARTIFACT=$ARTIFACT" >> $GITHUB_ENV
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT }}
-          path: output/Monaco-Nerd-Font.zip
+          path: output/Monotional-Nerd-Font.zip
