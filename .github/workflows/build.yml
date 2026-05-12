@@ -64,7 +64,6 @@ jobs:
       - name: Patch Monotional
         run: |
           mkdir -p output
-          find fonts/ -name "*.ttf" | parallel ./font-patcher -c -q --careful -out output {}
           find fonts/ -name "*.ttf" | parallel ./font-patcher -c -q -s --careful -out output {}
 
       - name: Package Result
