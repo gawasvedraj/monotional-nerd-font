@@ -64,13 +64,13 @@ jobs:
       - name: Patch Monotional
         run: |
           mkdir -p output
-          find fonts/ -name "*.ttf" -exec ./font-patcher -c -q --careful -out output {} \;
-          find fonts/ -name "*.ttf" -exec ./font-patcher -c -q -s --careful -out output {} \;
+          find fonts/ -name "*.ttf" | parallel ./font-patcher -c -q --careful -out output {}
+          find fonts/ -name "*.ttf" | parallel ./font-patcher -c -q -s --careful -out output {}
 
       - name: Package Result
         run: |
           cd output
-          zip -r Monotional-Nerd-Font.zip .
+          tar -cJf ../Monotional-Nerd-Font.tar.xz .
 
       - name: Set Artifact Name
         run: |
@@ -81,4 +81,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT }}
-          path: output/Monotional-Nerd-Font.zip
+          path: Monotional-Nerd-Font.tar.xz
