@@ -53,10 +53,10 @@ jobs:
           repository: "regularhunter/monotional-font"
           latest: true
           fileName: "Monotional*"
+          extract: true
 
-      - name: Extract Fonts
+      - name: Copy Fonts
         run: |
-          unzip Monotional*.zip
           mkdir -p fonts
           cp Monotional*/*.ttf fonts/
           echo "Fonts ready"
